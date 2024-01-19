@@ -9,6 +9,16 @@ const Home = () => {
 
 const [data, setData] = useState([])
 
+const [basket, setBasket] = useState([])
+
+const addProductToBasket = (product) => {
+    console.log('product', product)
+
+    setBasket([...basket, product])
+    console.log('basket', basket)
+
+}
+
 useEffect(() => {
     fetch(API_URL)
     .then(res=>res.json())
@@ -20,7 +30,8 @@ const productsData = data.map(({title, price, id, image})=>
 price={price} 
 key={id}
 image={image}
-id = {id}/>)
+id = {id}
+addProductToBasket={addProductToBasket}/>)
 
 const productsCategory = (category) => {
 

@@ -20,7 +20,7 @@ const [selectadCategory, setSelectadCategory] = useState('')
     }
    
     const categoriesList = categories?.map((category, idx) => 
-    <option value = {category}>{category}</option>
+    <option key = {idx} value = {category}>{category}</option>
     )
 
     return (
@@ -29,8 +29,7 @@ const [selectadCategory, setSelectadCategory] = useState('')
         className="Category"
         value={selectadCategory}
         onChange={(e) => {
-            handleCategoty(e.target.value)}}
-        >
+            handleCategoty(e.target.value)}}>
         <option>all</option>
         {categoriesList}</select>
     </>

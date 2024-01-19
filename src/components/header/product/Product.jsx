@@ -3,9 +3,19 @@ import "./Product.css"
 import { useState } from "react";
 
 
-const Product = ({title, price, image, id}) => {
+const Product = (props) => {
 
-const [count, setCount] = useState(0)
+const {title, price, image, id, addProductToBasket} = props
+
+const [productCount, setProductCount] = useState(0)
+
+const addBasket = () => {
+    setProductCount(productCount + 1)
+
+    const data = {id:id, title: title, price: price, count:0}
+
+    addProductToBasket(data)
+}
 
 return (
     <div className="Product-item">
@@ -16,11 +26,11 @@ return (
         </div>
         <div className="Add-product" id="btn">
             <button className="Btn-add"
-            onClick={()=> setCount(count+1)}>+</button>
+            onClick={addBasket}>+</button>
             <button className="Btn-add"
-            onClick={()=> count >0 && setCount(count-1)}>-</button>
+            onClick={()=> productCount >0 && setProductCount(productCount-1)}>-</button>
         </div>
-        <div className="Count">Количество: {count}</div>
+        <div className="Count">Количество: {productCount}</div>
     </div>
 )
 }
