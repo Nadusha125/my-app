@@ -1,0 +1,43 @@
+.Header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-decoration: none;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.15);;
+}
+
+.Basket-icon {
+    width: 50px;
+}
+
+.Main-btn {
+    height: 50px;
+    margin: 20px;
+    padding: 15px;
+    background-color: rgb(38, 3, 56);
+    opacity: 0.5;
+    border: none;
+    border-radius: 8px;
+    color: aliceblue;
+    font-size: 18px;
+}
+
+.Main-btn:hover {
+    cursor: pointer;
+    background-color: rgb(196, 107, 240);
+    opacity: 0.5;
+}
+
+.Title-shop {
+    text-decoration: none;
+}
+
+.Title-shop:hover {
+    cursor: pointer;
+    color: rgb(196, 107, 240);
+}
+
+.Title-basket {
+    text-decoration: none;
+}
