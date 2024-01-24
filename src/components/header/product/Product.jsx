@@ -12,7 +12,7 @@ const [productCount, setProductCount] = useState(0)
 const addBasket = () => {
     setProductCount(productCount + 1)
 
-    const data = {id:id, title: title, price: price, count:0}
+    const data = {id:id, title: title, price: price, count:1}
 
     addProductToBasket(data)
 }

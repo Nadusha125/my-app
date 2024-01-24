@@ -42,3 +42,8 @@
 .Title-basket {
     text-decoration: none;
 }
+
+.Input-search{
+    width: 200px;
+    padding: 5px;
+}

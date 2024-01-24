@@ -5,18 +5,22 @@ import Categories from '../../components/categories/Categories';
 
 const API_URL = "https://fakestoreapi.com/products"
 
-const Home = () => {
+const Home = ({searchProduct}) => {
+    console.log('searchProduct', searchProduct)
 
 const [data, setData] = useState([])
 
 const [basket, setBasket] = useState([])
 
 const addProductToBasket = (product) => {
-    console.log('product', product)
+    let findProductById = basket.find(item => item.id === product.id)
 
-    setBasket([...basket, product])
-    console.log('basket', basket)
-
+    if(findProductById) {
+        findProductById.count++;
+        findProductById.price+=findProductById.price
+    } else {
+        setBasket([...basket, product])
+    }
 }
 
 useEffect(() => {
@@ -55,7 +59,9 @@ const productsCategory = (category) => {
 }
 
     return (
+        
 <div className='Home-container'> 
+{console.log('basket', basket)}
     <Categories productsCategory={productsCategory}/>
     <div className='Product-container'>
         {data.length ? productsData : <h1>Загрузка...</h1>}

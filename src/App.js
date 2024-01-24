@@ -8,16 +8,24 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import { useState } from 'react';
 
 
 
 
 function App() {
+
+const [searchProduct, saetSerchProduct] = useState('')
+
+  const searchData = (searcgWord) =>  {
+    saetSerchProduct(searcgWord)
+  }
+
   return (
     <>
-    <Header/>
+    <Header searchData={searchData}/>
       <Routes>
-        <Route path="/"  element={<Home />} />
+        <Route path="/"  element={<Home searchProduct={searchProduct}/>} />
         <Route path="/basket" element={<Basket/>} />
         <Route path='/card/:id' element={<Card/>}/>
         <Route path="/sale" element={<Sale/>} />
