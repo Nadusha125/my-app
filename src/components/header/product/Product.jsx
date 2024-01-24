@@ -5,16 +5,20 @@ import { useState } from "react";
 
 const Product = (props) => {
 
-const {title, price, image, id, addProductToBasket} = props
+const {title, price, image, id, addProductToBasket, deleteProductFromBasket} = props
 
 const [productCount, setProductCount] = useState(0)
 
 const addBasket = () => {
     setProductCount(productCount + 1)
-
     const data = {id:id, title: title, price: price, count:1}
-
     addProductToBasket(data)
+}
+
+
+const deleteFromBasket = () => {
+    productCount >0 && setProductCount(productCount-1)
+    deleteProductFromBasket(id, price)
 }
 
 return (
@@ -28,7 +32,8 @@ return (
             <button className="Btn-add"
             onClick={addBasket}>+</button>
             <button className="Btn-add"
-            onClick={()=> productCount >0 && setProductCount(productCount-1)}>-</button>
+            onClick={deleteFromBasket}
+            >-</button>
         </div>
         <div className="Count">Количество: {productCount}</div>
     </div>

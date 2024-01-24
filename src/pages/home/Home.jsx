@@ -12,14 +12,35 @@ const [data, setData] = useState([])
 
 const [basket, setBasket] = useState([])
 
+useEffect(() => {
+    const resultSearchProduct = data.filter(item => item.title.toLowerCase().includes(searchProduct.toLowerCase()))
+
+    // if(resultSearchProduct) {
+    //     setData(resultSearchProduct) 
+    // } else {
+    //     setData(data)
+    // }
+    setData(resultSearchProduct)
+}, [searchProduct])
+
+
+
 const addProductToBasket = (product) => {
     let findProductById = basket.find(item => item.id === product.id)
 
     if(findProductById) {
         findProductById.count++;
-        findProductById.price+=findProductById.price
+        findProductById.price+=product.price
     } else {
         setBasket([...basket, product])
+    }
+}
+
+const deleteProductFromBasket = (id, price) => {
+    let findProductById = basket.find(item => item.id === id)
+    if(findProductById) {
+        findProductById.count--;
+        findProductById.price-= price
     }
 }
 
@@ -35,7 +56,8 @@ price={price}
 key={id}
 image={image}
 id = {id}
-addProductToBasket={addProductToBasket}/>)
+addProductToBasket={addProductToBasket}
+deleteProductFromBasket={deleteProductFromBasket}/>)
 
 const productsCategory = (category) => {
 
@@ -46,16 +68,6 @@ const productsCategory = (category) => {
             : `${API_URL}`)
         .then(res=>res.json())
         .then(json=>setData(json))
-        // другой вариант:
-    //     if(category === 'all') {
-    //         fetch(API_URL)
-    //         .then(res=>res.json())
-    //         .then(json=>setData(json))
-    //     } else {
-    //         fetch(`${API_URL}/category/${category}`)
-    //         .then(res=>res.json())
-    //         .then(json=>setData(json))
-    // }
 }
 
     return (
