@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css'
-import Product from '../../components/header/product/Product';
+import Product from '../../components/product/Product';
 import Categories from '../../components/categories/Categories';
+import { useSelector } from 'react-redux';
 
 const API_URL = "https://fakestoreapi.com/products"
 
-const Home = ({searchProduct}) => {
+const Home = ({searchProduct, getBasket}) => {
     console.log('searchProduct', searchProduct)
 
 const [data, setData] = useState([])
+console.log('data', data)
 
 const [basket, setBasket] = useState([])
 
-useEffect(() => {
-    const resultSearchProduct = data.filter(item => item.title.toLowerCase().includes(searchProduct.toLowerCase()))
+const message = useSelector((state) => state.counter.mess)
 
-    // if(resultSearchProduct) {
-    //     setData(resultSearchProduct) 
-    // } else {
-    //     setData(data)
-    // }
+useEffect(() => {
+    if(searchProduct.length>0) {
+    const resultSearchProduct = data.filter(item => item.title.toLowerCase().includes(searchProduct.toLowerCase()))
+    console.log('resultSearchProduct', resultSearchProduct)
     setData(resultSearchProduct)
+} else {
+
+        fetch(API_URL)
+        .then(res=>res.json())
+        .then(json=>setData(json))
+}
 }, [searchProduct])
 
 
+useEffect(()=> {
+    getBasket(basket)
+}, [basket])
 
 const addProductToBasket = (product) => {
     let findProductById = basket.find(item => item.id === product.id)
@@ -71,14 +80,17 @@ const productsCategory = (category) => {
 }
 
     return (
+        <>
         
-<div className='Home-container'> 
 {console.log('basket', basket)}
     <Categories productsCategory={productsCategory}/>
+    <h1>{message}</h1>
     <div className='Product-container'>
         {data.length ? productsData : <h1>Загрузка...</h1>}
     </div>
-</div>
+
+        </>
+
 )
 }
 

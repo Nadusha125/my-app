@@ -1,17 +1,21 @@
 import {Link} from "react-router-dom";
 import "./Product.css"
 import { useState } from "react";
-
+import { addProduct } from "../../redux/slices/basketSlice";
+import { useDispatch } from "react-redux";
 
 const Product = (props) => {
 
 const {title, price, image, id, addProductToBasket, deleteProductFromBasket} = props
 
+const dispatch = useDispatch()
+
 const [productCount, setProductCount] = useState(0)
 
 const addBasket = () => {
     setProductCount(productCount + 1)
-    const data = {id:id, title: title, price: price, count:1}
+    const data = {id:id, title: title, price: price, count:1, image:image}
+    dispatch(addProduct(data))
     addProductToBasket(data)
 }
 
@@ -26,7 +30,7 @@ return (
             <Link to={`/card/${id}`} className="Product-title">{title}</Link>
             <h3>{price} $</h3>
         <div className="Image-container">
-            <img  src = {image} alt = {title}/>
+            <img className="Image" src = {image} alt = {title}/>
         </div>
         <div className="Add-product" id="btn">
             <button className="Btn-add"
