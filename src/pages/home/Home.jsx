@@ -6,13 +6,11 @@ import { useSelector } from 'react-redux';
 
 const API_URL = "https://fakestoreapi.com/products"
 
-const Home = ({searchProduct, getBasket}) => {
-    console.log('searchProduct', searchProduct)
+const Home = ({searchProduct}) => {
+    // console.log('searchProduct', searchProduct)
 
 const [data, setData] = useState([])
-console.log('data', data)
-
-const [basket, setBasket] = useState([])
+// console.log('data', data)
 
 const message = useSelector((state) => state.counter.mess)
 
@@ -22,36 +20,12 @@ useEffect(() => {
     console.log('resultSearchProduct', resultSearchProduct)
     setData(resultSearchProduct)
 } else {
-
         fetch(API_URL)
         .then(res=>res.json())
         .then(json=>setData(json))
 }
 }, [searchProduct])
 
-
-useEffect(()=> {
-    getBasket(basket)
-}, [basket])
-
-const addProductToBasket = (product) => {
-    let findProductById = basket.find(item => item.id === product.id)
-
-    if(findProductById) {
-        findProductById.count++;
-        findProductById.price+=product.price
-    } else {
-        setBasket([...basket, product])
-    }
-}
-
-const deleteProductFromBasket = (id, price) => {
-    let findProductById = basket.find(item => item.id === id)
-    if(findProductById) {
-        findProductById.count--;
-        findProductById.price-= price
-    }
-}
 
 useEffect(() => {
     fetch(API_URL)
@@ -65,12 +39,11 @@ price={price}
 key={id}
 image={image}
 id = {id}
-addProductToBasket={addProductToBasket}
-deleteProductFromBasket={deleteProductFromBasket}/>)
+/>)
 
 const productsCategory = (category) => {
 
-    console.log('category', category)
+    // console.log('category', category)
   
         fetch(category !== 'all'
             ? `${API_URL}/category/${category}`
@@ -82,7 +55,7 @@ const productsCategory = (category) => {
     return (
         <>
         
-{console.log('basket', basket)}
+{/* {console.log('basket', basket)} */}
     <Categories productsCategory={productsCategory}/>
     <h1>{message}</h1>
     <div className='Product-container'>

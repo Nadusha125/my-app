@@ -3,7 +3,6 @@ import Home from './pages/home/Home.jsx';
 import Basket from './pages/basket/Basket.jsx'
 import Card from './pages/card/Card.jsx'
 import Header from './components/header/Header.jsx'
-import Sale from './pages/sale/Sale.jsx';
 import {
   Route,
   Routes,
@@ -22,12 +21,7 @@ const [searchProduct, saetSerchProduct] = useState('')
     saetSerchProduct(searcgWord)
   }
 
-const [basket, setBasket] = useState ([])
 
-const getBasket = (basketgg) => {
-  console.log('basketgg', basketgg)
-  setBasket(basketgg)
-}
 
 
   return (
@@ -38,13 +32,10 @@ const getBasket = (basketgg) => {
       <Routes>
         <Route path="/"  element={<Home 
         searchProduct={searchProduct} 
-        getBasket= {getBasket}
         />} />
         <Route path="/basket" element={<Basket 
-        basket={basket}
         />} />
         <Route path='/card/:id' element={<Card/>}/>
-        <Route path="/sale" element={<Sale/>} />
       </Routes>
       </div>
     </>

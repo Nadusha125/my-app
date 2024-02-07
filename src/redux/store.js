@@ -6,6 +6,6 @@ import basketReduser from './slices/basketSlice'
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    basket: basketReduser,
+    basketShop: basketReduser, //state.==basketShop==.basket === name:'basketShop' в basketSlice.js
   },
 })

@@ -1,18 +1,22 @@
 import React from 'react';
 import  './Basket.css'
 import {Link} from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 
 
-const Basket = ({basket}) => {
+const Basket = () => {
 
-const basketUI = basket.map((item) => 
-<div key={item.id} className="Product-item">
-<Link to={`/card/${item.id}`} className="Product-title">{item.title}</Link>
-<h3>{item.price} $</h3>
+const basket = useSelector((state) => state.basketShop.basket)
+
+const basketUI = basket?.map(({id, title, price, image, count}) => 
+(<div key={id} className="Product-item">
+<Link to={`/card/${id}`} className="Product-title">{title}</Link>
+<h3>{price} $</h3>
 <div className="Image-container">
-<img className="Image" src = {item.image} alt = {item.title}/>
+<img className="Image" src = {image} alt = {title}/>
 </div>
+<div className="Count">Количество: {count}</div>
 {/* <div className="Add-product" id="btn">
 <button className="Btn-add"
 onClick={addBasket}>+</button>
@@ -20,18 +24,12 @@ onClick={addBasket}>+</button>
 onClick={deleteFromBasket}
 >-</button>
 </div> */}
-<div className="Count">Количество: {item.count}</div>
-</div>
-
-/* <div key={item.id}>
-    <h1>{item.title}</h1>
-    <div>{item.price} $</div>
-    <div>Количество: {item.count}</div>
-</div>  */
-)
+</div>))
 
     // console.log('basket', basket)
-    return (<div className='Product-container'>{basketUI}</div>)
+    return (<div className='Product-container'>
+       {basketUI}
+        </div>)
 };
 
 export default Basket
