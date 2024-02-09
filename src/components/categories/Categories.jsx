@@ -1,24 +1,30 @@
 import { useEffect, useState } from "react"
 import './Categories.css'
+import { getCategories, setSelectedCategory } from "../../redux/slices/categoriesSlise"
+import { useDispatch, useSelector} from 'react-redux';
 
-const Categories = ({productsCategory}) => {
+
+const Categories = () => {
     
-const [categories, setCategories] = useState()
+// const [categories, setCategories] = useState()
 
-const [selectadCategory, setSelectadCategory] = useState('')
+const [selCategory, setSelCategory] = useState('')
 
+const dispatch = useDispatch()
+
+const categories = useSelector((state) => state.categories.items)
 
     useEffect(()=> {
-        fetch('https://fakestoreapi.com/products/categories')
-        .then(res=>res.json())
-        .then(json=>setCategories(json))
+        dispatch(getCategories())
     }, [])
 
     const handleCategoty = (category) => {
-        setSelectadCategory(category)
-        productsCategory(category)
+        setSelCategory(category)
+        dispatch(setSelectedCategory(category))
+        // console.log('category', category)
     }
    
+
     const categoriesList = categories?.map((category, idx) => 
     <option key = {idx} value = {category}>{category}</option>
     )
@@ -27,7 +33,7 @@ const [selectadCategory, setSelectadCategory] = useState('')
     <>
         <select
         className="Category"
-        value={selectadCategory}
+        value={selCategory}
         onChange={(e) => {
             handleCategoty(e.target.value)}}>
         <option>all</option>

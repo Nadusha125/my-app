@@ -2,69 +2,69 @@ import React, { useEffect, useState } from 'react';
 import './Home.css'
 import Product from '../../components/product/Product';
 import Categories from '../../components/categories/Categories';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts, getProductFromCategories } from '../../redux/slices/productsSlice';
+
+
+
 
 const API_URL = "https://fakestoreapi.com/products"
 
 const Home = ({searchProduct}) => {
     // console.log('searchProduct', searchProduct)
+const dispatch = useDispatch()
 
 const [data, setData] = useState([])
 // console.log('data', data)
 
-const message = useSelector((state) => state.counter.mess)
+
+const products = useSelector((state) => state.items.items)
+
+const category = useSelector((state) => state.categories.selectedCategory)
 
 useEffect(() => {
-    if(searchProduct.length>0) {
-    const resultSearchProduct = data.filter(item => item.title.toLowerCase().includes(searchProduct.toLowerCase()))
-    console.log('resultSearchProduct', resultSearchProduct)
-    setData(resultSearchProduct)
-} else {
-        fetch(API_URL)
-        .then(res=>res.json())
-        .then(json=>setData(json))
-}
-}, [searchProduct])
+        if(searchProduct.length>0) {
+        const resultSearchProduct = data.filter(item => item.title.toLowerCase().includes(searchProduct.toLowerCase()))
+        console.log('resultSearchProduct', resultSearchProduct)
+        setData(resultSearchProduct)
+    } 
+    else {
+            fetch(API_URL)
+            .then((res)=>res.json())
+            .then((json)=>setData(json))
+            .catch((err) => console.log(err))
+    }
+    }, 
+    [searchProduct])
+
 
 
 useEffect(() => {
-    fetch(API_URL)
-    .then(res=>res.json())
-    .then(json=>setData(json))
-}, [])
+    category === 'all'
+    ? dispatch(getProducts())
+    : dispatch(getProductFromCategories(category))
+}, [category])
 
-const productsData = data.map(({title, price, id, image})=> 
+
+
+const productsData = products.map(({title, price, id, image}) => 
 <Product title = {title} 
 price={price} 
 key={id}
 image={image}
-id = {id}
-/>)
+id = {id}/>)
 
-const productsCategory = (category) => {
-
-    // console.log('category', category)
-  
-        fetch(category !== 'all'
-            ? `${API_URL}/category/${category}`
-            : `${API_URL}`)
-        .then(res=>res.json())
-        .then(json=>setData(json))
-}
 
     return (
-        <>
-        
+        <>  
 {/* {console.log('basket', basket)} */}
-    <Categories productsCategory={productsCategory}/>
-    <h1>{message}</h1>
+    <Categories 
+    // productsCategory={productsCategory}
+    />
     <div className='Product-container'>
-        {data.length ? productsData : <h1>Загрузка...</h1>}
+        {products.length ? productsData : <h1>Загрузка...</h1>}
     </div>
-
-        </>
-
-)
+        </>)
 }
 
 export default Home
