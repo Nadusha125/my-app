@@ -5,20 +5,29 @@ import {
     Link,
     useNavigate
   } from "react-router-dom";
+import { useDispatch, useSelector} from 'react-redux';
+import { setSearchWord, getProducts } from '../../redux/slices/productsSlice';
 
 
-const Header = ({searchData}) => {
-const [searchProduct, setSearchProduct] = useState('')
+
+const Header = () => {
+
+const basketCount = useSelector(state => state.basketShop.totalBasketCount)
+
+const dispatch = useDispatch()
 
 const handleChange = (e) => {
-console.log('handleChange', e.target.value)
-setSearchProduct(e.target.value)
-searchData(e.target.value)
+if(e.target.value === '') {
+    dispatch(getProducts())
+} else {
+    dispatch(setSearchWord(e.target.value))
+}
 }
 
 const navigate = useNavigate()
 
-console.log('searchProduct', searchProduct)
+
+
     return (
         <div className='Header'>
             <button className='Main-btn' onClick={()=> {navigate('/')}}>На главную</button>
@@ -30,7 +39,7 @@ console.log('searchProduct', searchProduct)
                 onChange={handleChange}/>
             </div>
             <Link to="/" className='Title-shop'><h1>Online Shop</h1></Link>
-            <Link to="/basket" className='Title-basket'><img className='Basket-icon' src={basket}/>0</Link>
+            <Link to="/basket" className='Title-basket'><img className='Basket-icon' src={basket}/>{basketCount}</Link>
         </div>
     )
 }

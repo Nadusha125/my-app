@@ -16,7 +16,6 @@ const addBasket = () => {
     setProductCount(productCount + 1)
     const data = {id:id, title: title, price: price, count:1, image:image}
     dispatch(addProduct(data))
-    // dispatch(deleteProduct(data))
 }
 
 const deleteFromBasket = () => {
@@ -37,9 +36,7 @@ return (
             <button className="Btn-add"
             onClick={addBasket}>+</button>
             <button className="Btn-add"
-            onClick={ deleteFromBasket
-               // {productCount >0 && setProductCount(productCount-1)}
-            }
+            onClick={deleteFromBasket}
             >-</button>
         </div>
         <div className="Count">Количество: {productCount}</div>

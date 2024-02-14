@@ -34,13 +34,17 @@ export const getProductFromCategories = createAsyncThunk(
 
 
     const initialState = {
-        items: [],
+        items: []
     }
 
     const productSlice = createSlice ({
         name: 'items',
         initialState, 
-        reducers: {},
+        reducers: {
+            setSearchWord:(state, action) => {
+                state.items = state.items.filter(item => item.title.toLowerCase().includes(action.payload.toLowerCase()))
+            }
+        },
         extraReducers: (builder) => {
             builder.addCase(getProducts.fulfilled, (state, action) => {
                 state.items=action.payload
@@ -51,4 +55,6 @@ export const getProductFromCategories = createAsyncThunk(
         }
     })
 
+
+    export const {setSearchWord} = productSlice.actions
     export default productSlice.reducer

@@ -6,7 +6,6 @@ import { useDispatch, useSelector} from 'react-redux';
 
 const Categories = () => {
     
-// const [categories, setCategories] = useState()
 
 const [selCategory, setSelCategory] = useState('')
 

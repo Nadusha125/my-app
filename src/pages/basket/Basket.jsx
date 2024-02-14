@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 const Basket = () => {
 
 const basket = useSelector((state) => state.basketShop.basket)
+const totalSum = useSelector((state) => state.basketShop.totalSum)
+
+
 
 const basketUI = basket?.map(({id, title, price, image, count}) => 
 (<div key={id} className="Product-item">
@@ -26,10 +29,15 @@ onClick={deleteFromBasket}
 </div> */}
 </div>))
 
-    // console.log('basket', basket)
-    return (<div className='Product-container'>
-       {basketUI}
-        </div>)
+    
+    return (
+        <> 
+        <div className='Product-container'>
+       {basket.length  ? basketUI   : <h2>Корзина пуста</h2>} 
+        </div>
+        <div>{totalSum} $</div>
+        </>
+    )
 };
 
 export default Basket

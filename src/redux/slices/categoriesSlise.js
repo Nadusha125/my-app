@@ -14,8 +14,6 @@ export const getCategories = createAsyncThunk(
     })
 
 
- 
-
     const initialState = {
         items: [],
         selectedCategory:'all',

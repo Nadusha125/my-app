@@ -10,33 +10,13 @@ import { getProducts, getProductFromCategories } from '../../redux/slices/produc
 
 const API_URL = "https://fakestoreapi.com/products"
 
-const Home = ({searchProduct}) => {
-    // console.log('searchProduct', searchProduct)
+const Home = () => {
+    
 const dispatch = useDispatch()
-
-const [data, setData] = useState([])
-// console.log('data', data)
-
 
 const products = useSelector((state) => state.items.items)
 
 const category = useSelector((state) => state.categories.selectedCategory)
-
-useEffect(() => {
-        if(searchProduct.length>0) {
-        const resultSearchProduct = data.filter(item => item.title.toLowerCase().includes(searchProduct.toLowerCase()))
-        console.log('resultSearchProduct', resultSearchProduct)
-        setData(resultSearchProduct)
-    } 
-    else {
-            fetch(API_URL)
-            .then((res)=>res.json())
-            .then((json)=>setData(json))
-            .catch((err) => console.log(err))
-    }
-    }, 
-    [searchProduct])
-
 
 
 useEffect(() => {
@@ -57,10 +37,7 @@ id = {id}/>)
 
     return (
         <>  
-{/* {console.log('basket', basket)} */}
-    <Categories 
-    // productsCategory={productsCategory}
-    />
+    <Categories/>
     <div className='Product-container'>
         {products.length ? productsData : <h1>Загрузка...</h1>}
     </div>

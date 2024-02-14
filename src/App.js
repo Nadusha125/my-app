@@ -7,34 +7,20 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { useState } from 'react';
-import Counter from './components/Counter.jsx';
 
 
 
 
 function App() {
 
-const [searchProduct, saetSerchProduct] = useState('')
-
-  const searchData = (searcgWord) =>  {
-    saetSerchProduct(searcgWord)
-  }
-
-
-
 
   return (
     <>
-    <Counter/>
-    <Header searchData={searchData}/>
+    <Header />
     <div className='Home-container'> 
       <Routes>
-        <Route path="/"  element={<Home 
-        searchProduct={searchProduct} 
-        />} />
-        <Route path="/basket" element={<Basket 
-        />} />
+        <Route path="/"  element={<Home/>} />
+        <Route path="/basket" element={<Basket/>} />
         <Route path='/card/:id' element={<Card/>}/>
       </Routes>
       </div>
