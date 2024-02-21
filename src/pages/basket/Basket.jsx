@@ -1,7 +1,8 @@
 import React from 'react';
 import  './Basket.css'
 import {Link} from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addProduct, deleteProduct } from "../../redux/slices/basketSlice";
 
 
 

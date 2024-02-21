@@ -1,26 +1,31 @@
 import {Link} from "react-router-dom";
 import "./Product.css"
-import { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { addProduct, deleteProduct } from "../../redux/slices/basketSlice";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+
 
 const Product = (props) => {
-
 const {title, price, image, id} = props
 
-const dispatch = useDispatch()
+const dispatch = useDispatch() 
 
 const [productCount, setProductCount] = useState(0)
 
 const addBasket = () => {
     setProductCount(productCount + 1)
-    const data = {id:id, title: title, price: price, count:1, image:image}
-    dispatch(addProduct(data))
 }
+
+useEffect(() => {
+    const data = {id:id, title: title, price: price, count:productCount, image:image}
+    if(productCount > 0) {
+    dispatch(addProduct(data))
+    }
+}, [productCount])
 
 const deleteFromBasket = () => {
     productCount >0 && setProductCount(productCount-1)
-    const data = {id:id, title: title, price: price, count:1, image:image}
+    const data = {id:id, title: title, price: price, count:0, image:image}
     dispatch(deleteProduct(data))
 }
 
@@ -28,7 +33,8 @@ const deleteFromBasket = () => {
 return (
     <div className="Product-item">
             <Link to={`/card/${id}`} className="Product-title">{title}</Link>
-            <h3>{price} $</h3>
+            {/* <h3>{price} $</h3> */}
+            <h3>{Math.floor(price)} $</h3>
         <div className="Image-container">
             <img className="Image" src = {image} alt = {title}/>
         </div>
@@ -39,7 +45,7 @@ return (
             onClick={deleteFromBasket}
             >-</button>
         </div>
-        <div className="Count">Количество: {productCount}</div>
+        <div className="Count">Количество: {productCount ? productCount : 0}</div>
     </div>
 )
 }

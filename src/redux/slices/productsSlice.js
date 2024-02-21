@@ -3,26 +3,14 @@ import axios from 'axios'
 
 
 
-// const API_URL = "https://fakestoreapi.com/products"
+const API_URL = "https://fakestoreapi.com/products"
 
 
-export const getProducts = createAsyncThunk(
-    'items/fetchProducts', async ()=>{
-        try {
-        const {data} = await axios.get('https://fakestoreapi.com/products')
-        console.log('response', data)
-        return data
-        }
-        catch(e) {
-            console.log('error', e)
-        }
-    })
-
-
-export const getProductFromCategories = createAsyncThunk(
+export const getProductsFromCategories = createAsyncThunk(
         'categoty/fetchProductFromCategories', async (category)=>{
             try {
-            const {data} = await axios.get(`https://fakestoreapi.com/products/category/${category}`)
+            const {data} = await axios.get(
+                category === 'all' ? API_URL : API_URL+`/category/${category}`)
             console.log('catege', data)
             return data
             }
@@ -46,10 +34,7 @@ export const getProductFromCategories = createAsyncThunk(
             }
         },
         extraReducers: (builder) => {
-            builder.addCase(getProducts.fulfilled, (state, action) => {
-                state.items=action.payload
-            })
-            builder.addCase(getProductFromCategories.fulfilled, (state, action) => {
+            builder.addCase(getProductsFromCategories.fulfilled, (state, action) => {
                 state.items=action.payload
             })
         }

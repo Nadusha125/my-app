@@ -3,7 +3,7 @@ import './Home.css'
 import Product from '../../components/product/Product';
 import Categories from '../../components/categories/Categories';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, getProductFromCategories } from '../../redux/slices/productsSlice';
+import {  getProductsFromCategories } from '../../redux/slices/productsSlice';
 
 
 
@@ -20,9 +20,7 @@ const category = useSelector((state) => state.categories.selectedCategory)
 
 
 useEffect(() => {
-    category === 'all'
-    ? dispatch(getProducts())
-    : dispatch(getProductFromCategories(category))
+   dispatch(getProductsFromCategories(category))
 }, [category])
 
 

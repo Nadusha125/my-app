@@ -6,7 +6,7 @@ import {
     useNavigate
   } from "react-router-dom";
 import { useDispatch, useSelector} from 'react-redux';
-import { setSearchWord, getProducts } from '../../redux/slices/productsSlice';
+import { setSearchWord, getProductsFromCategories } from '../../redux/slices/productsSlice';
 
 
 
@@ -18,7 +18,7 @@ const dispatch = useDispatch()
 
 const handleChange = (e) => {
 if(e.target.value === '') {
-    dispatch(getProducts())
+    dispatch(getProductsFromCategories('all'))
 } else {
     dispatch(setSearchWord(e.target.value))
 }

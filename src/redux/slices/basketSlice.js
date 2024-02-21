@@ -5,6 +5,7 @@ const initialState = {
     basket: [],  
     totalSum: 0,
     totalBasketCount:0,
+    basketCount:0,
 }
 
 export const basketSlice = createSlice ({
@@ -12,7 +13,9 @@ export const basketSlice = createSlice ({
     initialState,
     reducers:{
         addProduct: (state, action) => {
-            let findProductById = state.basket.find(item => item.id === action.payload.id)
+            const {id, count, title, price, image} = action.payload  //диструктурировали (н-р:  чтобы везде не писать action.payload.title, -> title)
+
+            let findProductById = state.basket.find(item => item.id === id)
 
             if(findProductById) {
                 findProductById.count++;
@@ -24,25 +27,40 @@ export const basketSlice = createSlice ({
             state.totalSum = state.basket.reduce((acc, item) => {return acc + item.price}, 0);
 
             state.totalBasketCount = state.basket.reduce((acc, item) => {return acc + item.count}, 0)
-            console.log('totalBasketCount', state.totalBasketCount)
-            console.log('basket', state.basket)
+            
+            localStorage.setItem(id, JSON.stringify({
+            title, 
+            price, 
+            count,
+            image}))
+            
         },
 
 
         deleteProduct: (state, action) => {
-            let findProductById = state.basket.find(item => item.id===action.payload.id)
+            // let findProductById = state.basket.find(item => item.id===action.payload.id)
 
+            // if(findProductById > 1) {
+            //     findProductById.count--;
+            // } 
+            // // else {
+            // state.basket = state.basket.filter(item => item.id !== action.payload)
+            // }
+           
+
+
+            // мой вариант
+            let findProductById = state.basket.find(item => item.id===action.payload.id)
             if(findProductById) {
                 findProductById.count--;
                 findProductById.price-=action.payload.price
             }
-
+            state.totalBasketCount > 0 && 
             state.totalBasketCount--
         },
-
     }
 })
 
-export const {addProduct, deleteProduct} = basketSlice.actions
+export const {addProduct, deleteProduct, currentCount} = basketSlice.actions
 
 export default basketSlice.reducer
