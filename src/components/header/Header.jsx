@@ -12,7 +12,22 @@ import { setSearchWord, getProductsFromCategories } from '../../redux/slices/pro
 
 const Header = () => {
 
+
+// const keyId = Object.keys(localStorage)
+
+// const productBasketLS = keyId.map((id) => {
+// const product = JSON.parse(localStorage.getItem(id))
+// return {id, ...product}
+// })
+
+// const totalBasketCount = productBasketLS.reduce((acc, product)=> {return acc+ product.count}, 0)
+
+// console.log('totalBasketCount', totalBasketCount)
+
+
+
 const basketCount = useSelector(state => state.basketShop.totalBasketCount)
+console.log('basketCount', basketCount)
 
 const dispatch = useDispatch()
 

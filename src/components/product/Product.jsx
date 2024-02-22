@@ -33,8 +33,7 @@ const deleteFromBasket = () => {
 return (
     <div className="Product-item">
             <Link to={`/card/${id}`} className="Product-title">{title}</Link>
-            {/* <h3>{price} $</h3> */}
-            <h3>{Math.floor(price)} $</h3>
+            <h3>{price} $</h3>
         <div className="Image-container">
             <img className="Image" src = {image} alt = {title}/>
         </div>

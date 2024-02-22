@@ -6,6 +6,7 @@ const initialState = {
     totalSum: 0,
     totalBasketCount:0,
     basketCount:0,
+    basketLS:[]
 }
 
 export const basketSlice = createSlice ({
@@ -24,32 +25,33 @@ export const basketSlice = createSlice ({
                 state.basket.push({...action.payload})
             }
 
-            state.totalSum = state.basket.reduce((acc, item) => {return acc + item.price}, 0);
+            // state.totalSum = state.basket.reduce((acc, item) => {return acc + item.price}, 0);
 
             state.totalBasketCount = state.basket.reduce((acc, item) => {return acc + item.count}, 0)
             
+            let countPrice = count * price
+            
             localStorage.setItem(id, JSON.stringify({
             title, 
-            price, 
+            price: countPrice, 
             count,
             image}))
             
+
+            const keyId = Object.keys(localStorage)
+
+                 state.basketLS = keyId.map((id) => {
+                const product = JSON.parse(localStorage.getItem(id))
+                return {id, ...product}
+                })
+
+
+                state.totalSum = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
         },
 
 
         deleteProduct: (state, action) => {
-            // let findProductById = state.basket.find(item => item.id===action.payload.id)
 
-            // if(findProductById > 1) {
-            //     findProductById.count--;
-            // } 
-            // // else {
-            // state.basket = state.basket.filter(item => item.id !== action.payload)
-            // }
-           
-
-
-            // мой вариант
             let findProductById = state.basket.find(item => item.id===action.payload.id)
             if(findProductById) {
                 findProductById.count--;
