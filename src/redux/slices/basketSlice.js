@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    basket: [],  
-    totalSum: 0,
+    // basket: [],  
+    // totalSum: 0,
+    // basketCount:0,
     totalBasketCount:0,
-    basketCount:0,
     basketLS:[]
 }
 
@@ -16,19 +16,6 @@ export const basketSlice = createSlice ({
         addProduct: (state, action) => {
             const {id, count, title, price, image} = action.payload  //диструктурировали (н-р:  чтобы везде не писать action.payload.title, -> title)
 
-            let findProductById = state.basket.find(item => item.id === id)
-
-            if(findProductById) {
-                findProductById.count++;
-                findProductById.price+=action.payload.price
-            } else {
-                state.basket.push({...action.payload})
-            }
-
-            // state.totalSum = state.basket.reduce((acc, item) => {return acc + item.price}, 0);
-
-            state.totalBasketCount = state.basket.reduce((acc, item) => {return acc + item.count}, 0)
-            
             let countPrice = count * price
             
             localStorage.setItem(id, JSON.stringify({
@@ -36,33 +23,37 @@ export const basketSlice = createSlice ({
             price: countPrice, 
             count,
             image}))
-            
-
+           
             const keyId = Object.keys(localStorage)
 
-                 state.basketLS = keyId.map((id) => {
-                const product = JSON.parse(localStorage.getItem(id))
-                return {id, ...product}
-                })
+            state.basketLS = keyId.map((id) => {
+            const product = JSON.parse(localStorage.getItem(id))
+            return {id, ...product}
+            })
 
+            // state.totalSum = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
 
-                state.totalSum = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
+            state.totalBasketCount = state.basketLS?.reduce((acc, item) => {return acc + item.count}, 0)
         },
 
+        loadBasketFromLS: (state, action) => {
+            const keyId = Object.keys(localStorage)
 
-        deleteProduct: (state, action) => {
+            state.basketLS = keyId.map((id) => {
+            const product = JSON.parse(localStorage.getItem(id))
+            return {id, ...product}
+            }) 
 
-            let findProductById = state.basket.find(item => item.id===action.payload.id)
-            if(findProductById) {
-                findProductById.count--;
-                findProductById.price-=action.payload.price
-            }
-            state.totalBasketCount > 0 && 
-            state.totalBasketCount--
-        },
+            state.totalBasketCount = state.basketLS?.reduce((acc, item) => {return acc + item.count}, 0)
+
+            state.totalSum = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
+        }
+
+        // deleteProduct: (state, action) => {
+        // },
     }
 })
 
-export const {addProduct, deleteProduct, currentCount} = basketSlice.actions
+export const {addProduct, deleteProduct, loadBasketFromLS} = basketSlice.actions
 
 export default basketSlice.reducer

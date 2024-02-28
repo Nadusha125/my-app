@@ -10,21 +10,19 @@ const {title, price, image, id} = props
 
 const dispatch = useDispatch() 
 
-const [productCount, setProductCount] = useState(0)
+const [count, setCount] = useState(0)
 
 const addBasket = () => {
-    setProductCount(productCount + 1)
+    setCount(count + 1)
 }
 
 useEffect(() => {
-    const data = {id:id, title: title, price: price, count:productCount, image:image}
-    if(productCount > 0) {
-    dispatch(addProduct(data))
-    }
-}, [productCount])
+    const data = {id:id, title: title, price: price, count:count, image:image}
+    count > 0 && dispatch(addProduct(data))
+}, [count])
 
 const deleteFromBasket = () => {
-    productCount >0 && setProductCount(productCount-1)
+    count >0 && setCount(count-1)
     const data = {id:id, title: title, price: price, count:0, image:image}
     dispatch(deleteProduct(data))
 }
@@ -44,7 +42,7 @@ return (
             onClick={deleteFromBasket}
             >-</button>
         </div>
-        <div className="Count">Количество: {productCount ? productCount : 0}</div>
+        <div className="Count">Количество: {count ? count : 0}</div>
     </div>
 )
 }

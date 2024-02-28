@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Header.css';
 import basket from './assets/basket.svg'
 import {
@@ -12,24 +12,10 @@ import { setSearchWord, getProductsFromCategories } from '../../redux/slices/pro
 
 const Header = () => {
 
-
-// const keyId = Object.keys(localStorage)
-
-// const productBasketLS = keyId.map((id) => {
-// const product = JSON.parse(localStorage.getItem(id))
-// return {id, ...product}
-// })
-
-// const totalBasketCount = productBasketLS.reduce((acc, product)=> {return acc+ product.count}, 0)
-
-// console.log('totalBasketCount', totalBasketCount)
-
-
-
-const basketCount = useSelector(state => state.basketShop.totalBasketCount)
-console.log('basketCount', basketCount)
-
 const dispatch = useDispatch()
+
+const total = useSelector((state) => state.basketShop.totalBasketCount)
+console.log('total', total)
 
 const handleChange = (e) => {
 if(e.target.value === '') {
@@ -54,7 +40,7 @@ const navigate = useNavigate()
                 onChange={handleChange}/>
             </div>
             <Link to="/" className='Title-shop'><h1>Online Shop</h1></Link>
-            <Link to="/basket" className='Title-basket'><img className='Basket-icon' src={basket}/>{basketCount}</Link>
+            <Link to="/basket" className='Title-basket'><img className='Basket-icon' src={basket}/>{total}</Link>
         </div>
     )
 }

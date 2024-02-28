@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import  './Basket.css'
 import {Link} from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {loadBasketFromLS} from '../../redux/slices/basketSlice'
 
 
 
@@ -11,6 +12,12 @@ const Basket = () => {
     const productsBasket = useSelector((state) => state.basketShop.basketLS)
 
     const totalSum = useSelector((state) => state.basketShop.totalSum)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(loadBasketFromLS())
+    }, [])
 
     const productBasketUI = productsBasket.map(({id, title, price, image, count}) => 
    <div key={id} className="Product-item">
@@ -32,7 +39,7 @@ const Basket = () => {
             {productBasketUI}
         </div>
         <h2>Итоговая сумма: 
-            {totalSum.toFixed(2)} 
+            {totalSum} 
             $</h2>
         </>
     )
