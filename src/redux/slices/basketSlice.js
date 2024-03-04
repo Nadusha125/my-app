@@ -2,9 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    // basket: [],  
-    // totalSum: 0,
-    // basketCount:0,
+    totalPrice:0,
     totalBasketCount:0,
     basketLS:[]
 }
@@ -31,12 +29,10 @@ export const basketSlice = createSlice ({
             return {id, ...product}
             })
 
-            // state.totalSum = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
-
             state.totalBasketCount = state.basketLS?.reduce((acc, item) => {return acc + item.count}, 0)
         },
 
-        loadBasketFromLS: (state, action) => {
+        loadBasketFromLS: (state) => {
             const keyId = Object.keys(localStorage)
 
             state.basketLS = keyId.map((id) => {
@@ -46,10 +42,21 @@ export const basketSlice = createSlice ({
 
             state.totalBasketCount = state.basketLS?.reduce((acc, item) => {return acc + item.count}, 0)
 
-            state.totalSum = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
-        }
+            state.totalPrice = state.basketLS.reduce((acc, product)=> {return acc + product.price}, 0)
+        },
 
         // deleteProduct: (state, action) => {
+
+        //     const {id, count, title, price, image} = action.payload 
+
+        //     const keyId = Object.keys(localStorage)
+
+        //     state.basketLS = keyId.map((id) => {
+        //         const product = JSON.parse(localStorage.getItem(id))
+        //         return {id, ...product}
+        //         })
+
+        //     state.deleteBasketCount = state.basketLS?filter(item => item.id !== action.payload)
         // },
     }
 })

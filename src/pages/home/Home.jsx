@@ -4,6 +4,7 @@ import Product from '../../components/product/Product';
 import Categories from '../../components/categories/Categories';
 import { useDispatch, useSelector } from 'react-redux';
 import {  getProductsFromCategories } from '../../redux/slices/productsSlice';
+import {loadBasketFromLS} from '../../redux/slices/basketSlice'
 
 
 
@@ -13,6 +14,8 @@ const API_URL = "https://fakestoreapi.com/products"
 const Home = () => {
     
 const dispatch = useDispatch()
+
+useEffect(() => dispatch(loadBasketFromLS()), [])
 
 const products = useSelector((state) => state.items.items)
 

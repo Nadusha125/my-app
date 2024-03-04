@@ -11,7 +11,7 @@ const Basket = () => {
 
     const productsBasket = useSelector((state) => state.basketShop.basketLS)
 
-    const totalSum = useSelector((state) => state.basketShop.totalSum)
+    const totalSum = useSelector((state) => state.basketShop.totalPrice)
 
     const dispatch = useDispatch()
 

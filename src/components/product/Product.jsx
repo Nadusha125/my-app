@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import "./Product.css"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, deleteProduct } from "../../redux/slices/basketSlice";
 import React, { useEffect, useState } from 'react';
 
@@ -12,6 +12,16 @@ const dispatch = useDispatch()
 
 const [count, setCount] = useState(0)
 
+const basketLS = useSelector((state) => state.basketShop.basketLS)
+
+const findProductFromBasket = basketLS.find(item => item.id ==id)
+
+useEffect(() => {
+    if(findProductFromBasket) {
+        setCount(findProductFromBasket.count)
+    }
+}, [])
+
 const addBasket = () => {
     setCount(count + 1)
 }
@@ -21,11 +31,11 @@ useEffect(() => {
     count > 0 && dispatch(addProduct(data))
 }, [count])
 
-const deleteFromBasket = () => {
-    count >0 && setCount(count-1)
-    const data = {id:id, title: title, price: price, count:0, image:image}
-    dispatch(deleteProduct(data))
-}
+// const deleteFromBasket = () => {
+//     count >0 && setCount(count-1)
+//     const data = {id:id, title: title, price: price, count:0, image:image}
+//     dispatch(deleteProduct(data))
+// }
 
 
 return (
@@ -39,7 +49,7 @@ return (
             <button className="Btn-add"
             onClick={addBasket}>+</button>
             <button className="Btn-add"
-            onClick={deleteFromBasket}
+            // onClick={deleteFromBasket}
             >-</button>
         </div>
         <div className="Count">Количество: {count ? count : 0}</div>
